@@ -1,13 +1,13 @@
 <?php 
-$dsn = 'mysql:host=1cb63a885cfd;dbname=common;charset=utf8';
-$user = 'eko';
-$password = 'eko';
+require_once("../../model/todo.php");
 
-$pdo = new PDO($dsn, $user, $password);
+//staticなので::で呼び出し
+$todo_list = Todo::findByQuery('SELECT * FROM todos');
+/*$pdo = new PDO(DSN, USERNAME, PASSWORD);
 $stmh = $pdo->query('SELECT * FROM todos');
 
 $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
-//var_dump($todo_list);
+*/
 ?>
 <!DOCTYPE html>
 <html lang="ja">
