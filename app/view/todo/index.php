@@ -1,13 +1,31 @@
 <?php 
-require_once("../../model/todo.php");
+
+require_once("../../controller/TodoController.php");
+
+//MVC「V」画面表示
 
 //staticなので::で呼び出し
-$todo_list = Todo::findByQuery('SELECT * FROM todos');
-/*$pdo = new PDO(DSN, USERNAME, PASSWORD);
-$stmh = $pdo->query('SELECT * FROM todos');
+$controler = new TodoController;
+$todo_list = $controler->index();
+//$todo_list = Todo::findByQuery('SELECT * FROM todos');
 
-$todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
-*/
+
+if($_POST["submit"]){
+    $title = $_POST["title"];
+    $title_array = [];
+
+    for($i=0; $i < count($todo_list); $i++){
+        array_push($title_array,$todo_list[$i]["title"]);
+        //var_dump($title_array);
+    }
+    
+    if(in_array($title,$title_array)){
+        echo $title;    
+    }else{
+        echo "あかんですわ！";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -24,5 +42,9 @@ $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
         </li>
         <?php endforeach; ?>
     </ul>
+    <form method="POST" action="">
+        <input type="text" name="title">
+        <input type="submit" name="submit">
+    </form>
 </body>
 </html>

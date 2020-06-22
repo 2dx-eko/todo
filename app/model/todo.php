@@ -1,6 +1,8 @@
 <?php
 require_once("../../config/db.php");
 
+//MVC「M」DBから値を取得したり、保存したりする処理を記述
+
 class Todo{
     //DBを呼び出す用メソッド
     public static function findByQuery($query){
@@ -11,6 +13,18 @@ class Todo{
         
         return $todo_list;
     }
+
+    //全部を返すメソッド
+    public static function findAll(){
+        $pdo = new PDO(DSN, USERNAME, PASSWORD);
+        $stmh = $pdo->query('SELECT * FROM todos');
+
+        $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $todo_list;
+    }
 }
+
+
 
 ?>
