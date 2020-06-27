@@ -10,22 +10,6 @@ $todo_list = $controler->index();
 //$todo_list = Todo::findByQuery('SELECT * FROM todos');
 
 
-if($_POST["submit"]){
-    $title = $_POST["title"];
-    $title_array = [];
-
-    for($i=0; $i < count($todo_list); $i++){
-        array_push($title_array,$todo_list[$i]["title"]);
-        //var_dump($title_array);
-    }
-    
-    if(in_array($title,$title_array)){
-        echo $title;    
-    }else{
-        echo "あかんですわ！";
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -42,9 +26,14 @@ if($_POST["submit"]){
         </li>
         <?php endforeach; ?>
     </ul>
-    <form method="POST" action="">
+    <form method="GET" action="">
+        <input type="radio" name="complete" value="完了">完了
+        <input type="radio" name="complete" value="未完了" checked>未完了
+        <br>
         <input type="text" name="title">
         <input type="submit" name="submit">
+        
+        
     </form>
 </body>
 </html>
