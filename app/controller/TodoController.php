@@ -7,11 +7,17 @@ class TodoController{
     //findAllからDB情報取得
     public function index(){
         $title = $_GET["title"];
-        $name = $_GET["complete"];
-        
-
+        $status = $_GET["status"];
+        if(isset($title)){
+            //todos内のtitleを取得
+            $query = "SELECT * FROM todos WHERE title =" . $title;
+        }
+        if(isset($status)){
+            //todos内のstatusを取得
+            $query = "SELECT * FROM todos WHERE status =" . $status;
+        }
         //$todo_list = Todo::findAll();
-        $todo_list = Todo::findByQuery();
+        $todo_list = Todo::findByQuery($query);
         return $todo_list;
 
     }

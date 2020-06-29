@@ -8,9 +8,13 @@ class Todo{
     public static function findByQuery($query){
         
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $stmh = $pdo->query('SELECT * FROM todos');
-
-        $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
+        //$stmh = $pdo->query('SELECT * FROM todos');
+        $stmh = $pdo->query($query);
+        if($stmh){
+            $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            $todo_list = array();
+        }
         
         return $todo_list;
     }

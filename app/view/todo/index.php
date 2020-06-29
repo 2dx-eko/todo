@@ -7,6 +7,7 @@ require_once("../../controller/TodoController.php");
 //staticなので::で呼び出し
 $controler = new TodoController;
 $todo_list = $controler->index();
+var_dump($todo_list);
 //$todo_list = Todo::findByQuery('SELECT * FROM todos');
 
 
@@ -27,8 +28,8 @@ $todo_list = $controler->index();
         <?php endforeach; ?>
     </ul>
     <form method="GET" action="">
-        <input type="radio" name="complete" value="完了">完了
-        <input type="radio" name="complete" value="未完了" checked>未完了
+        <input type="radio" name="status" value="完了">完了
+        <input type="radio" name="status" value="未完了" checked>未完了
         <br>
         <input type="text" name="title">
         <input type="submit" name="submit">
