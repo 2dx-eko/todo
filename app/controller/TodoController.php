@@ -8,16 +8,18 @@ class TodoController{
     public function index(){
         $title = $_GET["title"];
         $status = $_GET["status"];
-        if(isset($title)){
-            //todos内のtitleを取得
-            $query = "SELECT * FROM todos WHERE title =" . $title;
+        if(isset($title,$status)){
+            //todos内のtitleとstatusの条件に一致した物を取得
+            $query = "SELECT * FROM todos WHERE title =" . $title ."AND status =" . $status;
+            var_dump($query);
+        }else{
+            $error = "空です";
+            var_dump($error);
+            return $error;
         }
-        if(isset($status)){
-            //todos内のstatusを取得
-            $query = "SELECT * FROM todos WHERE status =" . $status;
-        }
-        //$todo_list = Todo::findAll();
-        $todo_list = Todo::findByQuery($query);
+
+        //$todo_list = Todo::findAll();//全部取得
+        $todo_list = Todo::findByQuery($query);//一部取得
         return $todo_list;
 
     }
