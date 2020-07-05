@@ -26,12 +26,12 @@ echo "</pre>";
         <?php foreach($todo_list as $todo): ?>
         <li>
         <?php echo $todo["title"]; ?>
-        </li>
+        </li> 
         <?php endforeach; ?>
     </ul>
     <form method="GET" action="index.php">
-        <input type="radio" name="status" value="完了">完了
-        <input type="radio" name="status" value="未完了" checked>未完了
+        <input type="radio" name="status" value="0">完了
+        <input type="radio" name="status" value="1">未完了
         <br>
         <input type="text" name="title">
         <input type="submit" name="submit">
