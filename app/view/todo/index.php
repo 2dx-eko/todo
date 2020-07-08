@@ -30,8 +30,8 @@ echo "</pre>";
         <?php endforeach; ?>
     </ul>
     <form method="GET" action="index.php">
-        <input type="radio" name="status" value="0">完了
-        <input type="radio" name="status" value="1">未完了
+        <input type="radio" name="status" value="1">完了
+        <input type="radio" name="status" value="2">未完了
         <br>
         <input type="text" name="title">
         <input type="submit" name="submit">
