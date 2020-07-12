@@ -25,7 +25,8 @@ echo "</pre>";
     <ul>
         <?php foreach($todo_list as $todo): ?>
         <li>
-        <?php echo $todo["title"]; ?>
+        <?php 
+        echo $todo["title"]; ?>
         </li> 
         <?php endforeach; ?>
     </ul>
