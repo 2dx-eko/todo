@@ -29,7 +29,4 @@ class Todo{
         return $todo_list;
     }
 }
-
-
-
 ?>
