@@ -8,7 +8,7 @@ require_once("../../controller/TodoController.php");
 $controler = new TodoController;
 $todo_list = $controler->index();
 echo "<pre>";
-var_dump($todo_list);
+
 echo "</pre>";
 //$todo_list = Todo::findByQuery('SELECT * FROM todos');
 
@@ -24,10 +24,11 @@ echo "</pre>";
 <body>
     <ul>
         <?php foreach($todo_list as $todo): ?>
-        <li>
-        <?php 
-        echo $todo["title"]; ?>
-        </li> 
+            <li>
+                <a href="./detail.php?todo_id=<?php echo $todo["id"]; ?>">
+                    <?php echo $todo["title"]; ?>
+                </a>
+            </li>
         <?php endforeach; ?>
     </ul>
     <form method="GET" action="index.php">

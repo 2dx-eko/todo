@@ -34,17 +34,22 @@ class TodoController{
             if(!empty($value)){
                 $where = $where . sprintf("%s = '%s'", $key, $value);
             }
-            
             //↓ループが最後以外の時にandがたされる！！！！！
             if($value !== end($params)){
                 $where = $where . $and;
             }
         }
         $query = sprintf("SELECT * FROM todos %s", $where);
-        var_dump($query);
-
         return $query;
         //$query = "SELECT * FROM todos WHERE title = '" . $title . "'" . "AND status =" . $status;       
+    }
+
+    //詳細画面用のメソッド
+    public function detail(){
+        $todo_id = $_GET["todo_id"];
+
+        $todo_list = Todo::findById($todo_id);
+        return $todo_list;
     }
 }
 ?>
