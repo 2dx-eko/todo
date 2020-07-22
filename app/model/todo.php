@@ -34,7 +34,7 @@ class Todo{
         $stmh = $pdo->query(sprintf("SELECT * FROM todos where id = %s",$todo_id));
 
         $todo = $stmh->fetch(PDO::FETCH_ASSOC);
-
+        
         return $todo;
     }
 }
