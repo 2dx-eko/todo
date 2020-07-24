@@ -46,14 +46,21 @@ class TodoController{
 
     //詳細画面用のメソッド
     public function detail(){
-        $todo_id = $_GET["todo_id"];
-        //var_dump($todo_id);
-        $todo_list = Todo::findById($todo_id);
+        $todo = $_GET["todo_id"];
+        $todo_list = Todo::findById($todo);
         if(!$todo_list){ //検索がない場合はfalseで返ってくる
             header("Location: ../errors/404.php");
             return false;
         }
         return $todo_list;
+    }
+
+    public function new(){
+       $title =  $_POST["title"];
+       $detail =  $_POST["detail"];
+       var_dump($title);
+       var_dump($detail);
+       
     }
 }
 ?>

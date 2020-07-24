@@ -22,6 +22,23 @@ echo "</pre>";
 <title>TODOリスト</title>
 </head>
 <body>
+    <div>
+        <a href="./new.php">
+        新規作成
+        </a>
+    </div>
+    <div>
+        <ul>
+        <?php foreach($todo_list as $todo): ?>
+            <li>
+                <a href="./detail.php?todo_id=<?php echo $todo["id"] ?>">
+                    <?php echo $todo["title"]; ?>
+                </a>
+            </li>
+        </ul>
+        <?php endforeach; ?>
+    </div>
+    <br><br>
     <ul>
         <?php foreach($todo_list as $todo): ?>
             <li>

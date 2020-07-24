@@ -29,9 +29,9 @@ class Todo{
         return $todo_list;
     }
 
-    public static function findById($todo_id){
+    public static function findById($todo){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $stmh = $pdo->query(sprintf("SELECT * FROM todos where id = %s",$todo_id));
+        $stmh = $pdo->query(sprintf("SELECT * FROM todos where id = %s",$todo));
 
         $todo = $stmh->fetch(PDO::FETCH_ASSOC);
         
