@@ -4,6 +4,35 @@ require_once("../../config/db.php");
 //MVC「M」DBから値を取得したり、保存したりする処理を記述
 
 class Todo{
+    public $title;
+    public $detail;
+    public $status;
+
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function setTitle($title){
+        $this->title = $title;
+    }
+
+    public function getDetail(){
+        return $this->detail;
+    }
+
+    public function setDetail($detail){
+        $this->detail = $detail;
+    }
+
+    public function getStatus(){
+        return $this->status;
+    }
+
+    public function setStatus($status){
+        $this->status = $status;
+    }
+
+
     //DBを呼び出す用メソッド
     public static function findByQuery($query){
         
@@ -37,5 +66,22 @@ class Todo{
         
         return $todo;
     }
+
+    //保存用メソッド
+    public function save(){
+        $query = sprintf(
+            "INSERT INTO `todos`
+            (`id`, `user_id`,`title`,`detail`,`status`,`created_at`,`updated_at`)
+            VALUES (0,0,'%s','%s',1,NOW(),NOW())",
+            $this->title,
+            $this->detail
+        );
+        $pdo = new PDO(DSN, USERNAME, PASSWORD);
+        $result = $pdo->query($query);
+
+        //var_dump($result);
+    }
+
+
 }
 ?>

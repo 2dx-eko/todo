@@ -1,5 +1,6 @@
 <?php 
 require_once("../../model/todo.php");
+require_once("../../validation/TodoValidation.php");
 //MVC「C」処理の流れを制御する処理
 
 
@@ -56,11 +57,47 @@ class TodoController{
     }
 
     public function new(){
-       $title =  $_POST["title"];
-       $detail =  $_POST["detail"];
-       var_dump($title);
-       var_dump($detail);
-       
+        $data = [
+            "title" =>  $_POST["title"],
+            "detail" =>  $_POST["detail"],
+        ];
+        
+        $validation = new TodoValidation;
+        $validation->setData($data);
+        if($validation->check() === false) {
+            $error_msgs = $validation->getErrorMessages();
+
+            session_start();
+            $_SESSION["error_msgs"] = $error_msgs;
+
+            $params = sprintf("?title=%s&detail=%s", $title, $detail);
+            header("Location: ./new.php" . $params);
+        }
+    
+        $validate_data = $validation->getData();
+        $title = $validate_data["title"];
+        $detail = $validate_data["detail"];
+
+        $todo = new Todo;
+        $todo->setTitle($title);
+        $todo->setDetail($detail);
+        $result = $todo->save();
+        if(!$result){
+            $params = sprintf("?title=%s&detail=%s", $title, $detail);
+            header("Location: ./new.php" . $params);
+        }
+        header("Location: ./index.php");
     }
 }
+      /*$error_msgs = [];
+       if(empty($title)){
+            $error_msgs[] = "タイトルが空です!";
+       }
+       if(empty($detail)){
+            $error_msgs[] = "詳細が空です!";
+       }
+       if(count($error_msgs) > 0) {
+            $params = sprintf("?title=%s&detail=%s", $title, $detail);
+            header("Location: ./new.php" . $params);
+       }*/
 ?>
