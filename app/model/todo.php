@@ -76,12 +76,55 @@ class Todo{
             $this->title,
             $this->detail
         );
+        try{
+            $pdo = new PDO(DSN, USERNAME, PASSWORD);
+
+            //ここからトランザクション
+            $pdo->beginTransaction();
+
+            $result = $pdo->query($query);
+             
+            $pdo->commit();
+
+        }catch(PDOException $e){
+            $pdo->rollBack();
+            echo $e->getMessage();
+        }
+    }
+
+    /*public function save(){
+        $query = sprintf(
+            "INSERT INTO `todos`
+            (`id`, `user_id`,`title`,`detail`,`status`,`created_at`,`updated_at`)
+            VALUES (0,0,'%s','%s',1,NOW(),NOW())",
+            $this->title,
+            $this->detail
+        );
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
         $result = $pdo->query($query);
 
         //var_dump($result);
+    }*/
+
+    public function update(){
+        $query = sprintf("UPDATE `todos` SET title = %s, detail = '%s';",
+            $this->title,
+            $this->detail
+        );
+
+        try{
+            //トランザクション
+            $this->pdo->beginTransaction();
+
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+
+            $this->pdo->commit();
+        }catch(PDOException $e){
+            $this->pdo->rollBack();
+
+            echo $e->getMessage();
+        }
     }
-
-
 }
 ?>
