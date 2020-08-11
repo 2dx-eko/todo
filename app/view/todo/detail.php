@@ -32,7 +32,8 @@ $todo = $controler->detail();
     <br>
     <div>
         <button>
-            <a href="./edit.php">編集</a>
+            <a href="./edit.php?todo_id=<?php echo $todo["id"]; ?>">編集</a>
+            
         </button>
     </div>
 </body>

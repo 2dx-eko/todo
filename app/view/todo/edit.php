@@ -3,10 +3,12 @@ require_once('./../../config/db.php');
 require_once('./../../model/todo.php');
 require_once("./../../controller/TodoController.php");
 
+session_start();
+
 $action = new TodoController;
 $todo = $action->edit();
 
-session_start();
+
 $error_msgs = $_SESSION["error_msgs"];
 
 unset($_SESSION["error_msgs"]);
