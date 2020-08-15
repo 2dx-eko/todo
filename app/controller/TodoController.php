@@ -90,16 +90,22 @@ class TodoController{
     }
 
     public function edit(){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            return false;
+        }
         $todo_id = $_GET["todo_id"];
         var_dump($todo_id);
         //$todo = Todo::findAll($todo_id);
         $todo = Todo::findById($todo_id);
+        
+       
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
 
         $title = $_POST["title"];
         $detail = $_POST["detail"];
+        var_dump($title);
         var_dump($detail);
         $todo->setTitle($title);
         $todo->setDetail($detail);
