@@ -6,8 +6,8 @@ require_once("./../../controller/TodoController.php");
 session_start();
 
 $action = new TodoController;
-$todo = $action->edit();
-
+$todo = $action->edit(); //編集画面表示用
+$update = $action->update($todo); //登録ボタン処理用
 
 $error_msgs = $_SESSION["error_msgs"];
 

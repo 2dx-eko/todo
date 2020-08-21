@@ -90,28 +90,30 @@ class TodoController{
     }
 
     public function edit(){
-        if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_SERVER["REQUEST_METHOD"] != "GET"){
             return false;
         }
         $todo_id = $_GET["todo_id"];
         var_dump($todo_id);
         //$todo = Todo::findAll($todo_id);
         $todo = Todo::findById($todo_id);
-        
-       
+        return $todo;
+    }
+
+    public function update($todo){
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
-
-        $title = $_POST["title"];
-        $detail = $_POST["detail"];
+        var_dump($todo);
+        $title = $_POST["title"]; //取得できてる
+        $detail = $_POST["detail"]; //取得できてる
         var_dump($title);
         var_dump($detail);
         $todo->setTitle($title);
         $todo->setDetail($detail);
         $todo->update();
-
     }
+
 }
       /*$error_msgs = [];
        if(empty($title)){
