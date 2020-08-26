@@ -7,8 +7,10 @@ session_start();
 
 $action = new TodoController;
 $todo = $action->edit(); //編集画面表示用
-$update = $action->update($todo); //登録ボタン処理用
-
+if($_SERVER["REQUEST_METHOD"] !== "GET"){
+    var_dump($todo);
+    $update = $action->update(); //登録ボタン処理用
+}
 $error_msgs = $_SESSION["error_msgs"];
 
 unset($_SESSION["error_msgs"]);
@@ -27,6 +29,9 @@ unset($_SESSION["error_msgs"]);
             <div>
                 <input name="title" type="text" value="<?php echo $todo["title"]; ?>">
             </div>
+            <div>
+                <input name="id" type="hidden" value="<?php echo $todo["id"]; ?>">
+            </div>
         </div>
         <div>
             <div>詳細</div>
@@ -36,7 +41,7 @@ unset($_SESSION["error_msgs"]);
                 </textarea>
             </div>
         </div>
-        <button type="submit">登録</button>    
+        <button type="submit" name="register">登録</button>    
     </form>
     <?php if($error_msgs): ?>
         <div>

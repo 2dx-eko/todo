@@ -100,13 +100,16 @@ class TodoController{
         return $todo;
     }
 
-    public function update($todo){
+    public function update(){
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
-        var_dump($todo);
-        $title = $_POST["title"]; //取得できてる
-        $detail = $_POST["detail"]; //取得できてる
+        $todo = $_POST["id"];
+      
+        $todo_list = Todo::findByAll($todo);
+
+        $title = $_POST["title"];
+        $detail = $_POST["detail"];
         var_dump($title);
         var_dump($detail);
         $todo->setTitle($title);
