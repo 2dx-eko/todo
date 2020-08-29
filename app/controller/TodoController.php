@@ -104,17 +104,24 @@ class TodoController{
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
-        $todo = $_POST["id"];
-      
-        $todo_list = Todo::findByAll($todo);
-
+        $todo = $_POST["id"]; //とれてる
+        var_dump($todo);
+        $todo_list = Todo::findByid($todo);
+    
         $title = $_POST["title"];
         $detail = $_POST["detail"];
-        var_dump($title);
-        var_dump($detail);
+        var_dump($title); //とれてる
+        var_dump($detail); //とれてる
         $todo->setTitle($title);
         $todo->setDetail($detail);
         $todo->update();
+        //if(成功したら){
+            header("Location: ./index.php");
+        //}else{
+            foreach($error_msgs as $error_msg){
+                echo $error_msg;
+            }
+        //}
     }
 
 }
