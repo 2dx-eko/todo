@@ -94,7 +94,7 @@ class TodoController{
             return false;
         }
         $todo_id = $_GET["todo_id"];
-        var_dump($todo_id);
+
         //$todo = Todo::findAll($todo_id);
         $todo = Todo::findById($todo_id);
         return $todo;
@@ -104,24 +104,23 @@ class TodoController{
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
-        $todo = $_POST["id"]; //とれてる
+        $id = (int) $_POST["id"]; //とれてる
+        $todo = new Todo;
         var_dump($todo);
-        $todo_list = Todo::findByid($todo);
+        $todo_list = $todo::findByid($id);
     
         $title = $_POST["title"];
         $detail = $_POST["detail"];
-        var_dump($title); //とれてる
-        var_dump($detail); //とれてる
-        $todo->setTitle($title);
-        $todo->setDetail($detail);
-        $todo->update();
-        //if(成功したら){
+        $todo_list->setTitle($title);
+        $todo_list->setDetail($detail);
+        
+        if($todo_list->update()){
             header("Location: ./index.php");
-        //}else{
+        }else{
             foreach($error_msgs as $error_msg){
                 echo $error_msg;
             }
-        //}
+        }
     }
 
 }
