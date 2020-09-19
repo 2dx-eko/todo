@@ -106,9 +106,8 @@ class TodoController{
         }
         $id = (int) $_POST["id"]; //とれてる
         $todo = new Todo;
-        var_dump($todo);
-        $todo_list = $todo::findByid($id);
-    
+        $todo_list = $todo::findByid($id);//とれてる
+       
         $title = $_POST["title"];
         $detail = $_POST["detail"];
         $todo_list->setTitle($title);
