@@ -1,4 +1,5 @@
 <?php 
+require_once("../../config/db.php");
 require_once("../../model/todo.php");
 require_once("../../validation/TodoValidation.php");
 //MVC「C」処理の流れを制御する処理
@@ -104,16 +105,21 @@ class TodoController{
         if($_SERVER["REQUEST_METHOD"] !== "POST"){
             return $todo;
         }
-        $id = (int) $_POST["id"]; //とれてる
-        $todo = new Todo;
-        $todo_list = $todo::findByid($id);//とれてる
-       
-        $title = $_POST["title"];
-        $detail = $_POST["detail"];
-        $todo_list->setTitle($title);
-        $todo_list->setDetail($detail);
+        $id = (int) $_POST["id"];
+        $todo = new Todo($id);
         
-        if($todo_list->update()){
+        $todo_list = $todo::findByid($id);
+       
+        $title = $todo_list["title"];
+        $detail = (int) $todo_list["detail"];
+
+       // $title = $_POST["title"];
+        //$detail = $_POST["detail"];
+        $todo->setTitle($title);
+        $todo->setDetail($detail);
+
+        $query = sprintf("SELECT * FROM todos where id = %s",$id);
+        if($todo->update($id)){
             header("Location: ./index.php");
         }else{
             foreach($error_msgs as $error_msg){

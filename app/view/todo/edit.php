@@ -7,7 +7,7 @@ session_start();
 
 $action = new TodoController;
 $todo = $action->edit(); //編集画面表示用 とれてる
-var_dump($todo);
+//var_dump($todo);
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $action->update(); //登録ボタン処理用
