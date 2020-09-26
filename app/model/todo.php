@@ -103,13 +103,19 @@ class Todo{
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
         $result = $pdo->query($query);
 
-        //var_dump($result);
-    }*/
+        //var_dump($result);s        
+    }
+    
 
-    public function update(){
-        $query = sprintf("UPDATE `todos` SET title = %s, detail = '%s';",
+    $query = sprintf("UPDATE `todos` SET title = %s, detail = '%s';",
             $this->title,
             $this->detail
+        );
+    */
+
+    public function update($id){//idとれてる
+        $format = "UPDATE todos SET title = %s detail = %d WHERE id =  %f"; //フォーマット
+        $query = sprintf($format, $this->title,$this->detail,$id//sdfに入る値
         );
 
         try{
