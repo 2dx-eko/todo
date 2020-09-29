@@ -92,32 +92,28 @@ class Todo{
         }
     }
 
-    /*public function save(){
-        $query = sprintf(
-            "INSERT INTO `todos`
-            (`id`, `user_id`,`title`,`detail`,`status`,`created_at`,`updated_at`)
-            VALUES (0,0,'%s','%s',1,NOW(),NOW())",
-            $this->title,
-            $this->detail
-        );
-        $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $result = $pdo->query($query);
-
-        //var_dump($result);s        
-    }
-    
-
-    $query = sprintf("UPDATE `todos` SET title = %s, detail = '%s';",
-            $this->title,
-            $this->detail
-        );
-    */
 
     public function update($id){//idとれてる
-        $format = "UPDATE todos SET title = %s detail = %d WHERE id =  %f"; //フォーマット
-        $query = sprintf($format, $this->title,$this->detail,$id//sdfに入る値
-        );
+        $format = "UPDATE todos SET title = %s, detail = %d WHERE id =  %f"; //フォーマット
+        
+        $query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
+        //UPDATE todos SET title = "aa", detail = "aa" WHERE id =  55;cmdからこれで更新はできた
+        try{
+            $pdo = new PDO(DSN, USERNAME, PASSWORD);
+            //トランザクション
+            $pdo->beginTransaction();
 
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $pdo->commit();
+        }catch(PDOException $e){
+            $pdo->rollBack();
+
+            echo $e->getMessage();
+        }
+
+        /*元
         try{
             //トランザクション
             $this->pdo->beginTransaction();
@@ -131,6 +127,7 @@ class Todo{
 
             echo $e->getMessage();
         }
+        */
     }
 }
 ?>
