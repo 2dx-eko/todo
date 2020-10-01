@@ -94,7 +94,7 @@ class Todo{
 
 
     public function update($id){//idとれてる
-        $format = "UPDATE todos SET title = %s, detail = %d WHERE id =  %f"; //フォーマット
+        $format = "UPDATE todos SET title = '%s', detail = '%s' WHERE id =  %s"; //フォーマット
         
         $query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
         //UPDATE todos SET title = "aa", detail = "aa" WHERE id =  55;cmdからこれで更新はできた

@@ -122,9 +122,7 @@ class TodoController{
         if($todo->update($id)){
             header("Location: ./index.php");
         }else{
-            foreach($error_msgs as $error_msg){
-                echo $error_msg;
-            }
+           
         }
     }
 
