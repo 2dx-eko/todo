@@ -111,7 +111,7 @@ class TodoController{
         $todo_list = $todo::findByid($id);
        
         $title = $todo_list["title"];
-        $detail = (int) $todo_list["detail"];
+        $detail = $todo_list["detail"];
 
        // $title = $_POST["title"];
         //$detail = $_POST["detail"];
@@ -121,8 +121,6 @@ class TodoController{
         $query = sprintf("SELECT * FROM todos where id = %s",$id);
         if($todo->update($id)){
             header("Location: ./index.php");
-        }else{
-           
         }
     }
 
