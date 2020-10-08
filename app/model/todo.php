@@ -94,9 +94,11 @@ class Todo{
 
 
     public function update($id){//idとれてる
-        $format = "UPDATE todos SET title = '%s', detail = '%s' WHERE id =  %s"; //フォーマット
+        //$format = "UPDATE todos SET title = '%s', detail = '%s' WHERE id =  %s";
+        $format = "UPDATE `todos` SET `title` = '%s', `detail` = '%s' , `status` = 1 WHERE id =  %s"; //フォーマット
         
         $query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
+        var_dump($query);
         //UPDATE todos SET title = "aa", detail = "aa" WHERE id =  55;cmdからこれで更新はできた
         try{
             $pdo = new PDO(DSN, USERNAME, PASSWORD);
@@ -105,7 +107,6 @@ class Todo{
 
             $stmt = $pdo->prepare($query);
             $stmt->execute();
-
             $pdo->commit();
         }catch(PDOException $e){
             $pdo->rollBack();
