@@ -95,7 +95,7 @@ class Todo{
 
     public function update($id){//idとれてる
         //$format = "UPDATE todos SET title = '%s', detail = '%s' WHERE id =  %s";
-        $format = "UPDATE `todos` SET `title` = '%s', `detail` = '%s' , `status` = 1 WHERE id =  %s"; //フォーマット
+        $format = "UPDATE `todos` SET `user_id` = 2, `title` = '%s', `detail` = '%s' , `status` = 1 WHERE id =  %s"; //フォーマット
         
         $query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
         var_dump($query);
