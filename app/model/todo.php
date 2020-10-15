@@ -93,13 +93,13 @@ class Todo{
     }
 
 
-    public function update($id){//idとれてる
-        //$format = "UPDATE todos SET title = '%s', detail = '%s' WHERE id =  %s";
-        $format = "UPDATE `todos` SET `user_id` = 2, `title` = '%s', `detail` = '%s' , `status` = 1 WHERE id =  %s"; //フォーマット
+    public function update($id,$get_title,$get_detail){//idとれてる
         
-        $query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
-        var_dump($query);
-        //UPDATE todos SET title = "aa", detail = "aa" WHERE id =  55;cmdからこれで更新はできた
+        $format = "UPDATE `todos` SET `title` = '%s', `detail` = '%s' WHERE id =  %s"; //フォーマット
+        $query = sprintf($format, $get_title,$get_detail,$id);//sdfに入る値
+        //$query = sprintf($format, $this->title,$this->detail,$id);//sdfに入る値
+        //$query = 'UPDATE todos SET title = "aaaaaaaa", detail = "aaaaaaaaaaaaaaaaa" WHERE id =  54;';
+        //
         try{
             $pdo = new PDO(DSN, USERNAME, PASSWORD);
             //トランザクション
