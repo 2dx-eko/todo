@@ -1,3 +1,15 @@
+<?php 
+require_once('./../../config/db.php');
+require_once('./../../model/users.php');
+require_once("./../../controller/LoginController.php");
+
+session_start();
+
+$action = new LoginController;
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $update = $action->login();
+}
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -7,7 +19,7 @@
 <body>
     <div class="login_title">ログインページ</div>
     <div class="login_col">
-        <form action="result.php" method="post">
+        <form method="post">
                 <div>
                     ID: <input name="user_id" type="text" value="<?php echo $_POST["user_id"]; ?>">
                     PASS: <input name="password" type="text" value="<?php echo $_POST["password"]; ?>">

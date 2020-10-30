@@ -6,18 +6,27 @@ require_once("../../model/users.php");
 
 class LoginController{
     public function login(){
-        $users_id = (int)$_POST["user_id"];
-        $users_pass = (int)$_POST["password"];
-
-        $users = new users($users_id);
-
-        $users_list = $users::findByid($users_id);
-
-        $get_id = (int)$users_list["login_id"];
-        $get_pass = (int)$users_list["password"];
+        $user_id = $_POST["user_id"];
+        $user_pass = $_POST["password"];
+        if(empty($user_id) == true || empty($user_pass) == true){
+            echo "id、passが入力されていません入力してください";
+            return false;
+        }
+        $user = new User();
         
-        if($users_id === $get_id && $users_pass === $get_pass){
-            echo "true!!!";
+        $user_search = $user->userSearch($user_id,$user_pass); //searchメソッドで検索
+        $search_id = $user_search["id"];
+        
+        $user_list = $user::findByid($search_id);
+        
+        $get_id = $user_list["login_id"];
+        $get_pass = $user_list["password"];
+        
+        if($user_id == $get_id && $user_pass == $get_pass){
+            $_SESSION["user_id"] = $get_id;
+            $_SESSION["get_pass"] = $get_pass;
+            header("Location: ../todo/index.php");
+            
         }else{
             echo "ログイン情報が間違えています";
         }
