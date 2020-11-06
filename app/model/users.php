@@ -10,7 +10,7 @@ class User{
     public static function userSearch($user_id,$user_pass){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
         $stmh = $pdo->query(
-            "SELECT * FROM users WHERE login_id = {$user_id} AND password = {$user_pass}"
+            "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
         );
         $user = $stmh->fetch(PDO::FETCH_ASSOC);
         return $user;

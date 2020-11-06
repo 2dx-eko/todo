@@ -1,13 +1,21 @@
-<?php 
+<?php
 require_once('./../../config/db.php');
 require_once('./../../model/users.php');
 require_once("./../../controller/LoginController.php");
 
 session_start();
 
+$_SESSION["login_error"] = "";
+
 $action = new LoginController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $action->login();
+    if(!$update){
+        header("Location:login.php");
+        echo $_SESSION["login_error"];
+        $_SESSION["login_error"] = "";
+        
+    }
 }
 ?>
 <html>
