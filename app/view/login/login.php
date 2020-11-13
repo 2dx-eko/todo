@@ -5,18 +5,19 @@ require_once("./../../controller/LoginController.php");
 
 session_start();
 
-$_SESSION["login_error"] = "";
-
+unset($_SESSION["login_error"]);
 $action = new LoginController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $action->login();
-    if(!$update){
-        header("Location:login.php");
+     if(!$update){
         echo $_SESSION["login_error"];
-        $_SESSION["login_error"] = "";
-        
+        unset($_SESSION["login_error"]);
     }
+    
 }
+
+echo $_SESSION["login_error"];
+
 ?>
 <html>
 <head>

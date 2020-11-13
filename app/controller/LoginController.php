@@ -13,10 +13,12 @@ class LoginController{
         $validation->check($user_id,$user_pass); //入力チェック
         
         $user_search = User::userSearch($user_id,$user_pass); //searchメソッドで検索
-        
+
         if(!$user_search){
+            session_start();
             $_SESSION["login_error"] = "ログイン情報が間違えています";
-            return false;
+            header("Location: login.php");
+            return;
         }
 
         $_SESSION["user_id"] = $user_search["login_id"];
