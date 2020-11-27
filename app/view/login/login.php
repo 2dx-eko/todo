@@ -5,18 +5,17 @@ require_once("./../../controller/LoginController.php");
 
 session_start();
 
-unset($_SESSION["login_error"]);
+//unset($_SESSION["login_error"]);
 $action = new LoginController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $action->login();
-     if(!$update){
-        echo $_SESSION["login_error"];
-        unset($_SESSION["login_error"]);
-    }
-    
+}//!$update
+if(isset($_SESSION["login_error"])){
+    $error = $_SESSION["login_error"];
+    unset($_SESSION["login_error"]);
 }
 
-echo $_SESSION["login_error"];
+//echo $_SESSION["login_error"];
 
 ?>
 <html>
@@ -26,6 +25,9 @@ echo $_SESSION["login_error"];
     <title>ログインページ</title>
 </head>
 <body>
+
+    <p><?php echo $error;?></p>
+
     <div class="login_title">ログインページ</div>
     <div class="login_col">
         <form method="post">
