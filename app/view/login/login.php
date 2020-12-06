@@ -9,6 +9,7 @@ session_start();
 $action = new LoginController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $action->login();
+    return;
 }//!$update
 if(isset($_SESSION["login_error"])){
     $error = $_SESSION["login_error"];

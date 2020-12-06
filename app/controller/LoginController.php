@@ -8,7 +8,15 @@ class LoginController{
         $user_id = $_POST["user_id"];
         $user_pass = $_POST["password"];
         $validation = new LoginValidation();
-        $validation->check($user_id,$user_pass); //入力チェック
+        $login_check =  $validation->check($user_id,$user_pass); //入力チェック
+        
+        //id,passどっちかが空だったら
+        if(!$login_check){
+            $validation->getErrorMessages();
+            return false;
+        }
+
+        //id,pass,両方入力があった際に検索開始
         $user_search = User::userSearch($user_id,$user_pass); //searchメソッドで検索
         if(!$user_search){
             session_start();
