@@ -8,38 +8,26 @@ class User{
     public $user_age;
 
     public static function userEntry($user_name,$user_age){
+        $user_age = (int)$user_age;
+        
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
 
-        $set_id = $pdo->query(
-        "SELECT * FROM users ORDER BY id DESC LIMIT 1"
-        );
-        $get_id = $set_id->fetch(PDO::FETCH_ASSOC);
-        $last_id = $get_id["id"];//usersテーブルに登録されている一番最後のIDを取得
-        $new_id = $last_id++; //新しく登録するuserのid
+        $set_id = $pdo->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
 
+       /* "INSERT INTO `todos`
+        (`id`, `user_id`,`title`,`detail`,`status`,`created_at`,`updated_at`)
+        VALUES (0,0,'%s','%s',1,NOW(),NOW())",
+ */
+        // "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
         $stmh = $pdo->prepare(
-            "INSERT INTO users (`id`,`name`,`age`) VALUES ('$new_id`,`$user_name`,`$user_age')"
-        );
-       
-        /*
-        $stmh = $pdo->query(
-            "SELECT * FROM users WHERE id = '$user_name' AND password = '$user_age'"
-        );*/
-        
+            "INSERT INTO users
+            ('id','name','age','created_at','updated_at')
+            VALUES (3,'$user_name','$user_age',NOW(),NOW())");
+        //INSERT INTO users (id,name,age,created_at,updated_at) VALUES (2,"test",11,NOW(),NOW());DBから直書きだとこれでOK
+         
         var_dump($stmh);
        $stmh->fetch(PDO::FETCH_ASSOC);
         return true;
     }
-
-
-    /*
-    //入力したidを元にカラムを取得（連想配列）
-    public static function findById($user_id){
-        $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $stmh = $pdo->query("SELECT * FROM users WHERE login_id = {$user_id}");
-        $user = $stmh->fetch(PDO::FETCH_ASSOC);
-        return $user;
-    } */
-
 }
 ?>
