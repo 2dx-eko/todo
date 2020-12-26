@@ -13,20 +13,17 @@ class User{
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
 
         $set_id = $pdo->query("SELECT * FROM items ORDER BY id DESC LIMIT 1");
-
-       /* "INSERT INTO `todos`
-        (`id`, `user_id`,`title`,`detail`,`status`,`created_at`,`updated_at`)
-        VALUES (0,0,'%s','%s',1,NOW(),NOW())",
- */
-        // "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
         
         try{
-            $stmh = $pdo->prepare("INSERT INTO items(\name\,\age\) VALUES ('$user_name','$user_age')");
+            $stmh = $pdo->prepare("INSERT INTO users
+            (\name\,\age\,\created_at\,\updated_at\)
+            VALUES ('$user_name','$user_age',NOW(),NOW())");
         }catch(Exception $e){
             echo "error";
         }
-
-        //INSERT INTO items (name,age) VALUES ("test",1111);DBから直書きだとこれでOK
+        
+        
+        //INSERT INTO users (name,age,created_at,updated_at,login_id,password) VALUES ("test",2222,NOW(),NOW(),1010,1100);DBから直書きだとこれでOK
             
         var_dump($stmh);
        $stmh->fetch(PDO::FETCH_ASSOC);
