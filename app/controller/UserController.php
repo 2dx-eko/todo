@@ -1,6 +1,6 @@
 <?php 
 require_once("../../config/db.php");
-require_once("../../model/newusers.php");
+require_once("../../model/users.php");
 require_once("../../validation/userValidation.php");
 //MVC「C」処理の流れを制御する処理
 class userController{

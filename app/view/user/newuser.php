@@ -1,6 +1,6 @@
 <?php
 require_once("../../config/db.php");
-require_once("../../model/newusers.php");
+require_once("../../model/users.php");
 require_once("../../controller/UserController.php");
 
 
