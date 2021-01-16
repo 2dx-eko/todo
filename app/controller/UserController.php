@@ -18,7 +18,7 @@ class userController{
         }
         //id,pass,両方入力があった際に新規登録処理開始
         $user_new = User::userEntry($user_name,$user_age); //searchメソッドで検索
-        var_dump($user_new);
+        
         //処理が全部終わり次第、ログインページに遷移
         //$_SESSION["user_id"] = $user_search["login_id"];
         //$_SESSION["user_pass"] = $user_search["password"];

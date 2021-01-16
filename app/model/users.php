@@ -23,25 +23,24 @@ class User{
     //ユーザー登録処理
     public static function userEntry($user_name,$user_age){
         $user_age = (int)$user_age;
-        
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-
-        $set_id = $pdo->query("SELECT * FROM items ORDER BY id DESC LIMIT 1");
         
         try{
-            $stmh = $pdo->prepare("INSERT INTO `users`
-             (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`)
-             VALUES ('$user_name','$user_age',NOW(),NOW(),10,10");
+            $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`) VALUES ('$user_name','$user_age',NOW(),NOW(),10,10)";
+            $stmh = $pdo->prepare($sql);
+            $result = $stmh->execute();
         }catch(Exception $e){
             echo "error";
         }
         
         
-        //INSERT INTO users (name,age,created_at,updated_at,login_id,password) VALUES ("test",2222,NOW(),NOW(),1010,1100);DBから直書きだとこれでOK
-            
-        var_dump($stmh);
-       $stmh->fetch(PDO::FETCH_ASSOC);
-        return true;
+
+       $id = (int)$pdo->lastInsertId();//登録した新規のIDを返す 
+       $select = $pdo->query(
+           "SELECT * FROM users WHERE id='$id'"
+        );
+       $user = $select->fetch(PDO::FETCH_ASSOC);
+       return $user;
     }
 
 
