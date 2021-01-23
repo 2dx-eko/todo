@@ -33,14 +33,17 @@ class User{
             echo "error";
         }
         
-        
-
        $id = (int)$pdo->lastInsertId();//登録した新規のIDを返す 
        $select = $pdo->query(
            "SELECT * FROM users WHERE id='$id'"
         );
        $user = $select->fetch(PDO::FETCH_ASSOC);
-       return $user;
+       
+       if(!isset($id)){
+           return false;
+       }else if($id == $user["id"]){
+           return $user;
+        }
     }
 
 

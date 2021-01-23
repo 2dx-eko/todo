@@ -1,5 +1,7 @@
 <?php 
-
+session_start();
+$user_id = $_SESSION["user_id"];
+$user_pass = $_SESSION["user_pass"];
 require_once("../../controller/TodoController.php");
 
 //MVC「V」画面表示
@@ -10,7 +12,6 @@ $todo_list = $controler->index();
 echo "<pre>";
 
 echo "</pre>";
-//$todo_list = Todo::findByQuery('SELECT * FROM todos');
 
 
 ?>
@@ -22,11 +23,17 @@ echo "</pre>";
 <title>TODOリスト</title>
 </head>
 <body>
-    <div>
+
+
+    <header>
+        <a href="userEdit.php?id=<?php echo $user_id; ?>&pass=<?php echo $user_pass; ?>">
+        ユーザー情報編集画面
+        </a>
+        <br><br>
         <a href="./new.php">
         新規作成
         </a>
-    </div>
+    </header>
     <div>
         <ul>
         <?php foreach($todo_list as $todo): ?>

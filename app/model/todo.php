@@ -114,21 +114,6 @@ class Todo{
             echo $e->getMessage();
         }
 
-        /*元
-        try{
-            //トランザクション
-            $this->pdo->beginTransaction();
-
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute();
-
-            $this->pdo->commit();
-        }catch(PDOException $e){
-            $this->pdo->rollBack();
-
-            echo $e->getMessage();
-        }
-        */
     }
 }
 ?>
