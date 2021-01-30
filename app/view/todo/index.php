@@ -26,7 +26,7 @@ echo "</pre>";
 
 
     <header>
-        <a href="userEdit.php?id=<?php echo $user_id; ?>&pass=<?php echo $user_pass; ?>">
+        <a href="../user/edit.php?id=<?php echo $user_id; ?>&pass=<?php echo $user_pass; ?>">
         ユーザー情報編集画面
         </a>
         <br><br>

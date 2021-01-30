@@ -125,31 +125,7 @@ class TodoController{
         }
     }
 
-    //ログインしてからユーザー情報編集メソッド
-    public function userEdit(){
-        $pdo = new PDO(DSN, USERNAME, PASSWORD);
 
-        $user_id = $_REQUEST["id"];
-        $user_pass = $_REQUEST["pass"];
-        $edit_name = $_POST["edit_name"]; //編集画面から編集された値を取得
-        $edit_age = $_POST["edit_age"]; //編集画面から編集された値を取得
-
-        $stmh = $pdo->query(
-            "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
-        );
-        $userinfo = $stmh->fetch(PDO::FETCH_ASSOC); //idとpassを元にユーザー情報を検索
-        $id = (int)$userinfo["id"];
-
-        try{ //UPDATE文で更新
-            $sql = "UPDATE users SET name = '$edit_name' , age = '$edit_age' WHERE id = '$id'";
-            $stmh_edit = $pdo->prepare($sql);
-            $result = $stmh_edit->execute();
-
-            header("Location : index.php");
-        }catch(Exception $e){
-            echo "データベースエラー";
-        }
-    }
 }
 
 ?>
