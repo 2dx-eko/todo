@@ -21,12 +21,14 @@ class User{
     }
 
     //ユーザー登録処理
-    public static function userEntry($user_name,$user_age){
+    public static function userEntry($user_name,$user_age,$id,$pass){
         $user_age = (int)$user_age;
+        $id = (int)$id;
+        $pass = (int)$pass;
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
         
         try{
-            $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`) VALUES ('$user_name','$user_age',NOW(),NOW(),10,10)";
+            $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`) VALUES ('$user_name','$user_age',NOW(),NOW(),'$id','$pass')";
             $stmh = $pdo->prepare($sql);
             $result = $stmh->execute();
         }catch(Exception $e){

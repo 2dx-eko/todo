@@ -2,35 +2,52 @@
 require_once("../../config/db.php");
 require_once("../../model/users.php");
 require_once("../../validation/userValidation.php");
+require_once("../../validation/editValidation.php");
 //MVC「C」処理の流れを制御する処理
-class userController{
+class UserController{
     public function new(){
         $user_name = $_POST["name"];
         $user_age = $_POST["age"];
+        $id = $_POST["id"];
+        $pass = $_POST["pass"];
+        $comfirm_pass = $_POST["comfirm_pass"];
         
         $validation = new userValidation();
-        $user_check =  $validation->check($user_name,$user_age); //入力チェック
-        
+        $user_check = $validation->check($user_name,$user_age); //入力チェック
+        $id_check = $validation->idCheck($id);
+        $pass_check = $validation->passCheck($pass,$comfirm_pass);
         //name,ageどっちかが空だったら
         if(!$user_check){
             $validation->getErrorMessages();
             return false;
+        }else if(!$id_check){
+            $validation->getIdErrorMessages();
+            return false;
+        }else if(!$pass_check){
+            $validation->getPassErrorMessages();
+            return false;
         }
         //id,pass,両方入力があった際に新規登録処理開始
-        $user_new = User::userEntry($user_name,$user_age); //searchメソッドで検索
+        $user_new = User::userEntry($user_name,$user_age,$id,$pass); //searchメソッドで検索
 
         header("Location: ../login/login.php");
     }
 
     //ログインしてからユーザー情報編集メソッド
-    public function userEdit(){
+    public function edit(){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
 
         $user_id = $_REQUEST["id"];
         $user_pass = $_REQUEST["pass"];
         $edit_name = $_POST["edit_name"]; //編集画面から編集された値を取得
         $edit_age = $_POST["edit_age"]; //編集画面から編集された値を取得
-
+        
+        $validation = new editValidation();
+        $check_name =  $validation->check_name($edit_name); //入力チェック
+        $check_age =  $validation->check_age($edit_age); //入力チェック
+        if(!$check_name || !$check_age){
+            return false;
+        }
         $stmh = $pdo->query(
             "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
         );
@@ -44,7 +61,7 @@ class userController{
             $sql = "UPDATE users SET name = '$edit_name' , age = '$edit_age' WHERE id = '$id'";
             $stmh_edit = $pdo->prepare($sql);
             $result = $stmh_edit->execute();
-
+            
             header("Location:../todo/index.php");
         }catch(Exception $e){
             echo "データベースエラー";

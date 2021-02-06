@@ -4,7 +4,7 @@ require_once("../../model/users.php");
 require_once("../../controller/UserController.php");
 
 
-$user = new userController;
+$user = new UserController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $user->new();
     return;
@@ -26,7 +26,9 @@ if(isset($_SESSION["user_error"])){
     <form method="post">
         名前：<input type="text" name="name"><br><br>
         年齢：<input type="text" name="age"><br><br>
-
+        ID ：<input type="text" name="id"><br><br>
+        PASS ：<input type="text" name="pass"><br><br>
+        PASS（確認用） ：<input type="text" name="comfirm_pass"><br><br>
         <button type="submit" name="user_submit">登録</button>
     </form>
 </body>

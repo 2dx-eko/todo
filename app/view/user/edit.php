@@ -9,11 +9,11 @@ $pdo = new PDO(DSN, USERNAME, PASSWORD);
 $stmh = $pdo->query(
     "SELECT * FROM users WHERE id = '$id' AND password = '$pass'"
 );
-$post = $stmh->fetch(PDO::FETCH_ASSOC);//ページ遷移時inputのvalueに編集前の情報が入るようにするため情報取得
+$user = $stmh->fetch(PDO::FETCH_ASSOC);//ページ遷移時inputのvalueに編集前の情報が入るようにするため情報取得
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $controller = new userController();
-    $controller->userEdit();
+    $controller = new UserController();
+    $controller->edit();
 }
 
 ?>
@@ -29,13 +29,21 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <div>
             <div>名前</div>
             <div>
-                <input name="edit_name" type="text" value="<?php echo $post["name"]; ?>">
+                <?php if(!isset($_SESSION["edit_username"])): ?>
+                <input name="edit_name" type="text" value="<?php echo $user["name"]; ?>">
+                <?php else: ?>
+                <input name="edit_age" type="text" value="<?php echo $_SESSION["edit_username"]; ?>"></input>
+                <?php endif; ?>
             </div>
         </div>
         <div>
             <div>年齢</div>
         <div>
-            <input name="edit_age" type="text" value="<?php echo $post["age"]; ?>"></input>
+            <?php if(!isset($_SESSION["edit_userage"])): ?>
+            <input name="edit_age" type="text" value="<?php echo $user["age"]; ?>"></input>
+            <?php else: ?>
+            <input name="edit_age" type="text" value="<?php echo $_SESSION["edit_userage"]; ?>"></input>
+            <?php endif; ?>
         </div>
         </div>
         <br>
