@@ -1,8 +1,7 @@
 <?php 
 require_once("../../config/db.php");
 require_once("../../model/users.php");
-require_once("../../validation/userValidation.php");
-require_once("../../validation/editValidation.php");
+require_once("../../validation/UserValidation.php");
 //MVC「C」処理の流れを制御する処理
 class UserController{
     public function new(){
@@ -10,26 +9,25 @@ class UserController{
         $user_age = $_POST["age"];
         $id = $_POST["id"];
         $pass = $_POST["pass"];
-        $comfirm_pass = $_POST["comfirm_pass"];
-        
-        $validation = new userValidation();
-        $user_check = $validation->check($user_name,$user_age); //入力チェック
-        $id_check = $validation->idCheck($id);
-        $pass_check = $validation->passCheck($pass,$comfirm_pass);
+        $comfirm_pass = $_POST["comfirm_pass"]; 
+        $check = [
+            "user_name" => $user_name,
+            "user_age" => $user_age,
+            "id" => $id,
+            "pass" => $pass,
+            "comfirm_pass" => $comfirm_pass
+        ];
+
+        $validation = new UserValidation();
+        $user_check = $validation->check($check); //入力チェック
         //name,ageどっちかが空だったら
-        if(!$user_check){
-            $validation->getErrorMessages();
-            return false;
-        }else if(!$id_check){
-            $validation->getIdErrorMessages();
-            return false;
-        }else if(!$pass_check){
-            $validation->getPassErrorMessages();
+        if(isset($user_check)){
+            $_SESSION["user_check"] = $user_check;
             return false;
         }
         //id,pass,両方入力があった際に新規登録処理開始
         $user_new = User::userEntry($user_name,$user_age,$id,$pass); //searchメソッドで検索
-
+        unset($_SESSION["user_check"]);
         header("Location: ../login/login.php");
     }
 
@@ -42,7 +40,7 @@ class UserController{
         $edit_name = $_POST["edit_name"]; //編集画面から編集された値を取得
         $edit_age = $_POST["edit_age"]; //編集画面から編集された値を取得
         
-        $validation = new editValidation();
+        $validation = new UserValidation();
         $check_name =  $validation->check_name($edit_name); //入力チェック
         $check_age =  $validation->check_age($edit_age); //入力チェック
         if(!$check_name || !$check_age){

@@ -7,7 +7,9 @@ require_once("../../controller/UserController.php");
 $user = new UserController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $user->new();
-    return;
+    if(isset($_SESSION["user_check"])){
+        echo $_SESSION["user_check"];
+    }
 }
 if(isset($_SESSION["user_error"])){
     $error = $_SESSION["user_error"];
