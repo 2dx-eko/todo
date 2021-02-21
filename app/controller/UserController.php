@@ -21,8 +21,8 @@ class UserController{
         $validation = new UserValidation();
         $user_check = $validation->check($check); //入力チェック
         //name,ageどっちかが空だったら
-        if(isset($user_check)){
-            $_SESSION["user_check"] = $user_check;
+        if(!$user_check){
+            $_SESSION["user_check"] = $validation->getErrorMessages();
             return false;
         }
         //id,pass,両方入力があった際に新規登録処理開始

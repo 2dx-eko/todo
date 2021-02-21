@@ -1,28 +1,38 @@
 <?php 
 class UserValidation{
-    public $errors;
+    private $errors;
 
     public function check($check){
       if(empty($check["user_name"]) == true || empty($check["user_age"]) == true){
-        $message = "名前、年齢が入力されていません入力してください<br>";
-        return $message;
-      }else if(empty($check["id"]) || !is_numeric($check["id"])){
-        $message = "IDが入力されていない、もしくは数字を入力してください<br>";
-        return $message;
-      }else if(!$check["pass"] == $check["comfirm_pass"]){
-        $message = "PASS項目とPASS確認項目が一致していません正しく入力してください<br>";
-        return $message;
-      }else if(empty($check["pass"]) || empty($check["comfirm_pass"])){
-        $message = "PASS項目とPASS確認項目が一致していません正しく入力してください<br>";
-        return $message;
+        $this->errors[] = "名前、年齢が入力されていません入力してください";
+        return false;
       }
+      
+      if(empty($check["id"]) || !is_numeric($check["id"])){
+        $this->errors[] = "IDが入力されていない、もしくは数字を入力してください";
+        return false;
+      }
+      
+      if(!$check["pass"] == $check["comfirm_pass"]){
+        $this->errors[] = "PASS項目とPASS確認項目が一致していません正しく入力してくださいx";
+        return false;
+      }
+      
+      if(empty($check["pass"]) || empty($check["comfirm_pass"])){
+        $this->errors[] = "PASS項目とPASS確認項目が一致していません正しく入力してください";
+        return false;
+      }
+      return true;
     }
- 
+
+    public function getErrorMessages(){
+      return $this->errors;
+    }
     //--------↑ユーザー新規登録----↓ユーザー情報編集--
     public function check_name($user_name){
       if(empty($user_name)){
         $_SESSION["edit_username"] = $user_name;
-        echo "名前が入力されていません<br>";
+        echo "名前が入力されていません";
         return false;
       }else{
         $_SESSION["edit_username"] = $user_name;

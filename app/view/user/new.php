@@ -8,7 +8,7 @@ $user = new UserController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $update = $user->new();
     if(isset($_SESSION["user_check"])){
-        echo $_SESSION["user_check"];
+        echo $_SESSION["user_check"][0];
     }
 }
 if(isset($_SESSION["user_error"])){
