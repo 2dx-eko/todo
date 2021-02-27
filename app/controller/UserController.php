@@ -41,25 +41,20 @@ class UserController{
         $edit_age = $_POST["edit_age"]; //編集画面から編集された値を取得
         
         $validation = new UserValidation();
-        $check_name =  $validation->check_name($edit_name); //入力チェック
-        $check_age =  $validation->check_age($edit_age); //入力チェック
-        if(!$check_name || !$check_age){
+        $checkEdit = $validation->checkEdit($edit_name,$edit_age);
+        if(!$checkEdit){
             return false;
         }
-        $stmh = $pdo->query(
-            "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
-        );
-        $userinfo = $stmh->fetch(PDO::FETCH_ASSOC); //idとpassを元にユーザー情報を検索
+        //user情報取得
+        $userinfo = User::getByUserIdAndPassword($pdo,$user_id,$user_pass);
+
         if(!$userinfo){
-            header("Location:../todo/index.php");     
+            header("Location:../todo/index.php");
         }
         $id = (int)$userinfo["id"];
-
-        try{ //UPDATE文で更新
-            $sql = "UPDATE users SET name = '$edit_name' , age = '$edit_age' WHERE id = '$id'";
-            $stmh_edit = $pdo->prepare($sql);
-            $result = $stmh_edit->execute();
-            
+        //user情報を元にupdateで更新
+        try{
+            User::updateUser($pdo,$edit_name,$edit_age,$id);
             header("Location:../todo/index.php");
         }catch(Exception $e){
             echo "データベースエラー";

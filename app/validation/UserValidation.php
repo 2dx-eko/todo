@@ -29,7 +29,17 @@ class UserValidation{
       return $this->errors;
     }
     //--------↑ユーザー新規登録----↓ユーザー情報編集--
-    public function check_name($user_name){
+    public function checkEdit($edit_name,$edit_age){
+      $name = $this->checkName($edit_name);
+      $age = $this->checkAge($edit_age);
+      if(!$name || !$age){
+        return false;
+      }else{
+        return true;
+      }
+    }
+    
+    public function checkName($user_name){
       if(empty($user_name)){
         $_SESSION["edit_username"] = $user_name;
         echo "名前が入力されていません";
@@ -40,7 +50,7 @@ class UserValidation{
       }
     }
      
-    public function check_age($user_age){
+    public function checkAge($user_age){
       if(empty($user_age)){
         $_SESSION["edit_userage"] = $user_age;
         echo "年齢が入力されていません";

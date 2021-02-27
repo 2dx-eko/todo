@@ -48,6 +48,20 @@ class User{
         }
     }
 
+    //ユーザー登録処理のSQL処理
+    public static function getByUserIdAndPassword($pdo,$user_id,$user_pass){
+        $stmh = $pdo->query(
+            "SELECT * FROM users WHERE id = '$user_id' AND password = '$user_pass'"
+        );
+        $userinfo = $stmh->fetch(PDO::FETCH_ASSOC); //idとpassを元にユーザー情報を検索
+        return $userinfo;
+    }
 
+    //ユーザー登録処理のSQL処理
+    public static function updateUser($pdo,$edit_name,$edit_age,$id){
+        $sql = "UPDATE users SET name = '$edit_name' , age = '$edit_age' WHERE id = '$id'";
+        $stmh_edit = $pdo->prepare($sql);
+        $result = $stmh_edit->execute();
+    }
 }
 ?>
