@@ -47,10 +47,6 @@ class UserController{
         }
         //user情報取得
         $userinfo = User::getByUserIdAndPassword($pdo,$user_id,$user_pass);
-
-        if(!$userinfo){
-            header("Location:../todo/index.php");
-        }
         $id = (int)$userinfo["id"];
         //user情報を元にupdateで更新
         try{
