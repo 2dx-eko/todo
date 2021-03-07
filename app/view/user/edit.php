@@ -15,6 +15,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $controller = new UserController();
     $controller->edit();
 }
+if(isset($_SESSION["edit_errorname"]) || isset($_SESSION["edit_errorage"])){
+    echo $_SESSION["edit_errorname"];
+    echo $_SESSION["edit_errorage"];
+}
+
 
 ?>
 <html lang="en">
@@ -32,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 <?php if(!isset($_SESSION["edit_username"])): ?>
                 <input name="edit_name" type="text" value="<?php echo $user["name"]; ?>">
                 <?php else: ?>
-                <input name="edit_age" type="text" value="<?php echo $_SESSION["edit_username"]; ?>"></input>
+                <input name="edit_name" type="text" value="<?php echo $_SESSION["edit_username"]; ?>"></input>
                 <?php endif; ?>
             </div>
         </div>

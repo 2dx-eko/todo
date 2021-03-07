@@ -43,6 +43,9 @@ class UserController{
         $validation = new UserValidation();
         $checkEdit = $validation->checkEdit($edit_name,$edit_age);
         if(!$checkEdit){
+            $error = $validation->getErrorMessages();
+            $_SESSION["edit_errorname"] = $error[0];
+            $_SESSION["edit_errorage"] = $error[1];
             return false;
         }
         //user情報取得

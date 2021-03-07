@@ -34,32 +34,31 @@ class UserValidation{
       $age = $this->checkAge($edit_age);
       if(!$name || !$age){
         return false;
-      }else{
-        return true;
       }
+      return true;
     }
     
-    public function checkName($user_name){
-      if(empty($user_name)){
-        $_SESSION["edit_username"] = $user_name;
-        echo "名前が入力されていません";
+    public function checkName($edit_name){
+      if(empty($edit_name)){
+        $_SESSION["edit_username"] = $edit_name;
+        $this->errors[] = "名前が入力されていません";
         return false;
       }else{
-        $_SESSION["edit_username"] = $user_name;
+        $_SESSION["edit_username"] = $edit_name;
         return true;
       }
     }
      
-    public function checkAge($user_age){
-      if(empty($user_age)){
-        $_SESSION["edit_userage"] = $user_age;
-        echo "年齢が入力されていません";
+    public function checkAge($edit_age){
+      if(empty($edit_age)){
+        $_SESSION["edit_userage"] = $edit_age;
+        $this->errors[] = "年齢が入力されていません";
         return false;
-      }else if(!is_numeric($user_age)){
-        $_SESSION["edit_userage"] = $user_age;
-        echo "年齢は数字を入力してください";
+      }else if(!is_numeric($edit_age)){
+        $_SESSION["edit_userage"] = $edit_age;
+        $this->errors[] = "年齢は数字を入力してください";
       }else{
-        $_SESSION["edit_userage"] = $user_age;
+        $_SESSION["edit_userage"] = $edit_age;
         return true;
       }
 
