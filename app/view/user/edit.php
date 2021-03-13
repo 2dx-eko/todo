@@ -15,9 +15,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $controller = new UserController();
     $controller->edit();
 }
+
+
 if(isset($_SESSION["edit_errorname"]) || isset($_SESSION["edit_errorage"])){
-    echo $_SESSION["edit_errorname"];
-    echo $_SESSION["edit_errorage"];
+    $error_messages[] = $_SESSION["edit_errorname"];
+    $error_messages[] = $_SESSION["edit_errorage"];
+    unset($_SESSION["edit_errorname"]);
+    unset($_SESSION["edit_errorage"]);
 }
 
 
@@ -30,6 +34,11 @@ if(isset($_SESSION["edit_errorname"]) || isset($_SESSION["edit_errorage"])){
 </head>
 <body>
     <h1>ユーザー情報編集</h1>
+    <ul>
+    <?php foreach($error_messages as $error_message): ?>
+        <li><?php echo $error_message ?></li>
+    <?php endforeach; ?>
+    </ul>
     <form method="post">
         <div>
             <div>名前</div>
