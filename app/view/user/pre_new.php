@@ -1,6 +1,6 @@
 <?php
 require_once("../../config/db.php");
-require_once("../../controller/mailController.php");
+require_once("../../controller/MailController.php");
 $action = new mailController;
 if(isset($_POST["mail_submit"])){
     $action->userResister();
