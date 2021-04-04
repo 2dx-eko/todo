@@ -17,7 +17,5 @@ class mailValidation{
     public function getErrorMessages(){
       return $this->errors;
     }
-
-
 }
 ?>

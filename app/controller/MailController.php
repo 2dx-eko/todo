@@ -2,6 +2,7 @@
 require_once("../../config/db.php");
 require_once("../../model/users.php");
 require_once("../../validation/mailValidation.php");
+require_once("../../controller/UserController.php");
 //MVC「C」処理の流れを制御する処理
 class MailController{
     public function userResister(){
@@ -19,13 +20,15 @@ class MailController{
         
         $email = $mail;
         $subject = "会員登録ありがとうございます"; // 題名 
-        $body = "本文本文本文本文本文本文本文本文本文\n"; // 本文
+        $body = "登録はこちらから「http://localhost:8000/view/user/new.php」\n"; // 本文
         $to = $mail;
         $header = "From: test@example.com";
         $result = mb_send_mail($to, $subject, $body, $header);
         $result = mail('test@example.com', 'テストだよ', '届いてるかな？', 'From: from@example.com');
-        var_dump($result);
-
+        var_dump($result);//trueなら送信OK
+        
+        //送信できたらDBにトークン、アドレス、仮登録状態にする
+        $token = UserController::tokenRegister($email);
     }
 
 }

@@ -2,6 +2,7 @@
 require_once("../../config/db.php");
 require_once("../../model/users.php");
 require_once("../../validation/UserValidation.php");
+
 //MVC「C」処理の流れを制御する処理
 class UserController{
     public function new(){
@@ -59,6 +60,15 @@ class UserController{
             echo "データベースエラー";
         }
     }
+
+    //会員登録成功時に仮登録を行う
+    public static function tokenRegister($email){
+        $token = uniqid(dechex(random_int(0, 255)));
+        User::tokenTemporary($email,$token);
+        
+    }
+
+
 
 }
 ?>
