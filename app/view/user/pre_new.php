@@ -2,7 +2,7 @@
 require_once("../../config/db.php");
 require_once("../../controller/MailController.php");
 $action = new mailController;
-if(isset($_POST["mail_submit"])){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $action->userResister();
     echo $_SESSION["mail_check"][0];
     unset($_SESSION["mail_check"][0]);

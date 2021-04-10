@@ -3,10 +3,17 @@ require_once("../../config/db.php");
 require_once("../../model/users.php");
 require_once("../../controller/UserController.php");
 
+//メールに添付されたURLのパラメータ、トークン取得
+$token = $_GET["token"];
+$token_check = User::tokenCheck($token);
+
+if(!$token_check){
+    header("Location:/404");
+}
 
 $user = new UserController;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $update = $user->new();
+    $update = $user->new($token);
     if(isset($_SESSION["user_check"])){
         echo $_SESSION["user_check"][0];
     }

@@ -5,7 +5,7 @@ require_once("../../validation/UserValidation.php");
 
 //MVC「C」処理の流れを制御する処理
 class UserController{
-    public function new(){
+    public function new($token){
         $user_name = $_POST["name"];
         $user_age = $_POST["age"];
         $id = $_POST["id"];
@@ -27,7 +27,7 @@ class UserController{
             return false;
         }
         //id,pass,両方入力があった際に新規登録処理開始
-        $user_new = User::userEntry($user_name,$user_age,$id,$pass); //searchメソッドで検索
+        $user_new = User::userEntry($user_name,$user_age,$id,$pass,$token); //searchメソッドで検索
         unset($_SESSION["user_check"]);
         header("Location: ../login/login.php");
     }
@@ -65,6 +65,7 @@ class UserController{
     public static function tokenRegister($email){
         $token = uniqid(dechex(random_int(0, 255)));
         User::tokenTemporary($email,$token);
+        return $token;
         
     }
 

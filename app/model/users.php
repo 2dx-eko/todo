@@ -21,20 +21,20 @@ class User{
     }
 
     //ユーザー登録処理
-    public static function userEntry($user_name,$user_age,$id,$pass){
+    public static function userEntry($user_name,$user_age,$id,$pass,$token){
         $user_age = (int)$user_age;
         $id = (int)$id;
         $pass = (int)$pass;
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        
         try{
-            $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`) VALUES ('$user_name','$user_age',NOW(),NOW(),'$id','$pass')";
+            $sql ="UPDATE users SET name = '$user_name', age = '$user_age' , created_at = NOW() , updated_at = NOW() , login_id = '$id' , password = '$pass' , status = 2 WHERE token = '$token'";
             $stmh = $pdo->prepare($sql);
             $result = $stmh->execute();
         }catch(Exception $e){
             echo "error";
         }
-        
+
+
        $id = (int)$pdo->lastInsertId();//登録した新規のIDを返す 
        $select = $pdo->query(
            "SELECT * FROM users WHERE id='$id'"
@@ -71,6 +71,17 @@ class User{
         $stmh_edit = $pdo->prepare($sql);
         $result = $stmh_edit->execute();
     }
+
+    //メールからnew.php遷移時パラメータのトークンとDB内にあるユーザー情報内に同じトークンがあるか
+    public static function tokenCheck($token){
+        $pdo = new PDO(DSN, USERNAME, PASSWORD);
+        $stmh = $pdo->query(
+            "SELECT * FROM users WHERE token = '$token'"
+        );
+        $usertoken = $stmh->fetch(PDO::FETCH_ASSOC); //idとpassを元にユーザー情報を検索
+        return $usertoken;
+    }
+    
 }
 
 ?>
