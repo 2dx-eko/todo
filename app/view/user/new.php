@@ -3,17 +3,9 @@ require_once("../../config/db.php");
 require_once("../../model/users.php");
 require_once("../../controller/UserController.php");
 
-//メールに添付されたURLのパラメータ、トークン取得
-$token = $_GET["token"];
-$token_check = User::tokenCheck($token);
-
-if(!$token_check){
-    header("Location:/404");
-}
-
 $user = new UserController;
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $update = $user->new($token);
+if($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET"){
+    $update = $user->new();
     if(isset($_SESSION["user_check"])){
         echo $_SESSION["user_check"][0];
     }
@@ -32,7 +24,7 @@ if(isset($_SESSION["user_error"])){
 </head>
 <body>
     <h1>ユーザー新規登録</h1>
-    <form method="post">
+    <form method="POST">
         名前：<input type="text" name="name"><br><br>
         年齢：<input type="text" name="age"><br><br>
         ID ：<input type="text" name="id"><br><br>

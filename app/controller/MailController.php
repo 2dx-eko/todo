@@ -6,7 +6,6 @@ require_once("../../controller/UserController.php");
 //MVC「C」処理の流れを制御する処理
 class MailController{
     public function userResister(){
-        $pdo = new PDO(DSN, USERNAME, PASSWORD);
         $mail = $_POST["mail"];
         $validation = new mailValidation();
         $mail_check = $validation->check($mail); //入力チェック
@@ -17,7 +16,7 @@ class MailController{
         
         //送信できたらDBにトークン、アドレス、仮登録状態にする
         try{
-            $token = UserController::tokenRegister($mail);
+            $token = User::tokenIssue($mail);
         }catch(Exception $e){
             echo "DBエラー";
             return false;

@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <h1>会員登録画面</h1>
-    <form action="" method="post">
+    <form action="" method="POST">
        <p>mailaddress：<input type="text" name="mail" size="50" value="<?php echo $_POST["mail"] ?>"></p> 
 <input type="submit" name="mail_submit" value="送信">
    </form>

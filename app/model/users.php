@@ -64,14 +64,6 @@ class User{
         $result = $stmh_edit->execute();
     }
 
-    //DBにトークン、アドレス、仮登録状態にする
-    public static function tokenTemporary($email,$token){
-        $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`,`email`,`status`,`token`) VALUES (default,default,default,default,default,default,'$email',0,'$token')";
-        $stmh_edit = $pdo->prepare($sql);
-        $result = $stmh_edit->execute();
-    }
-
     //メールからnew.php遷移時パラメータのトークンとDB内にあるユーザー情報内に同じトークンがあるか
     public static function tokenCheck($token){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
@@ -82,6 +74,16 @@ class User{
         return $usertoken;
     }
     
+    //DBにトークン、アドレス、仮登録状態にする
+    public static function tokenIssue($mail){
+        $token = uniqid(dechex(random_int(0, 255)));
+        $pdo = new PDO(DSN, USERNAME, PASSWORD);
+        $sql = "INSERT INTO `users` (`name`,`age`,`created_at`,`updated_at`,`login_id`,`password`,`email`,`status`,`token`) VALUES (default,default,default,default,default,default,'$mail',0,'$token')";
+        $stmh_edit = $pdo->prepare($sql);
+        $result = $stmh_edit->execute();
+        return $token;
+    }
+
 }
 
 ?>

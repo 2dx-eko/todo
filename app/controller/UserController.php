@@ -5,12 +5,24 @@ require_once("../../validation/UserValidation.php");
 
 //MVC「C」処理の流れを制御する処理
 class UserController{
-    public function new($token){
+    public function new(){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            //メールに添付されたURLのパラメータ、トークン取得
+            $token = $_GET["token"];
+            $token_check = User::tokenCheck($token);
+            if(!$token_check){
+                header("Location:/404");
+            }
+        }else{
+            echo "GET";
+        }
+            
+        
         $user_name = $_POST["name"];
         $user_age = $_POST["age"];
         $id = $_POST["id"];
         $pass = $_POST["pass"];
-        $comfirm_pass = $_POST["comfirm_pass"]; 
+        $comfirm_pass = $_POST["comfirm_pass"];
         $check = [
             "user_name" => $user_name,
             "user_age" => $user_age,
@@ -18,7 +30,6 @@ class UserController{
             "pass" => $pass,
             "comfirm_pass" => $comfirm_pass
         ];
-
         $validation = new UserValidation();
         $user_check = $validation->check($check); //入力チェック
         //name,ageどっちかが空だったら
@@ -35,12 +46,10 @@ class UserController{
     //ログインしてからユーザー情報編集メソッド
     public function edit(){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-
         $user_id = $_REQUEST["id"];
         $user_pass = $_REQUEST["pass"];
         $edit_name = $_POST["edit_name"]; //編集画面から編集された値を取得
         $edit_age = $_POST["edit_age"]; //編集画面から編集された値を取得
-        
         $validation = new UserValidation();
         $checkEdit = $validation->checkEdit($edit_name,$edit_age);
         if(!$checkEdit){
@@ -62,13 +71,13 @@ class UserController{
     }
 
     //会員登録成功時に仮登録を行う
-    public static function tokenRegister($email){
+   /* public static function tokenRegister($email){
         $token = uniqid(dechex(random_int(0, 255)));
         User::tokenTemporary($email,$token);
         return $token;
         
     }
-
+*/
 
 
 }
