@@ -6,7 +6,7 @@ require_once("../../validation/UserValidation.php");
 //MVC「C」処理の流れを制御する処理
 class UserController{
     public function new(){
-        if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_SERVER["REQUEST_METHOD"] == "GET"){
             //メールに添付されたURLのパラメータ、トークン取得
             $token = $_GET["token"];
             $token_check = User::tokenCheck($token);
@@ -14,7 +14,7 @@ class UserController{
                 header("Location:/404");
             }
         }else{
-            echo "GET";
+            return;
         }
             
         
